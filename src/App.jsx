@@ -11,38 +11,29 @@ function App() {
 
     const [token, setToken] = useState(null)
 
-    useEffect(() => {
-        const storedToken = localStorage.getItem("token")
-        setToken(storedToken)
-    }, [])
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token")
+    setToken(storedToken)
+  }, [])
 
     return (
+  <Router>
+      <NavbarComponent />
+      <Routes>
+        <Route path="/" element={<Navigate to="/register" />} />
+        <Route path="/login" element={<Login setToken={setToken} />} />
+        <Route path="/register" element={<Register />} />
 
-        <Router>
-
-            <NavbarComponent />
-
-            <Routes>
-
-                <Route path="/" element={<Navigate to="/register" />} />
-
-                <Route path="/login" element={<Login />} />
-
-                <Route path="/register" element={<Register />} />
-
-                <Route
-                    path="/dashboard"
-                    element={localStorage.getItem("token") ? <Dashboard /> : <Navigate to="/login" />}
-                />
-
-                <Route
-                    path="/customers"
-                    element={localStorage.getItem("token") ? <Customers /> : <Navigate to="/login" />}
-                />
-
-            </Routes>
-
-        </Router>
+        <Route
+          path="/dashboard"
+          element={token ? <Dashboard /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/customers"
+          element={token ? <Customers /> : <Navigate to="/login" />}
+        />
+      </Routes>
+    </Router>
 
     )
 }

@@ -37,12 +37,11 @@ function Login() {
 
         try {
 
-        const res = await API.post("/api/auth/login", { email, password })
+            const res = await API.post("/api/auth/login", { email, password })
 
             localStorage.setItem("token", res.data.token)
-
-            toast.success("Login Successful")
-
+            // update token state
+            setToken(res.data.token) 
             navigate("/dashboard")
 
         } catch (err) {
